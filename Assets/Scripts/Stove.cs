@@ -6,9 +6,14 @@ public class Stove : MonoBehaviour
     public GameObject uncookedPattyPrefab;
     public GameObject cookedPattyPrefab;
     public GameObject burntPattyPrefab;
+    public GameObject checkImage;
+    public GameObject warningImage;
 
     public float defaultCookingTime = 10f; // Default cooking time for the patty
     public float defaultBurnTime = 10f; // Default burn time for the patty
+    public float warningTimeThreshold = 8f; // Time threshold for displaying warning before burning
+    public float checkImageDuration = 2f; // Duration for displaying the check image
+    public float warningImageDuration = 0.3f;
 
     private float cookingTime;
     private float burnTime;
@@ -25,6 +30,10 @@ public class Stove : MonoBehaviour
     {
         cookingTime = defaultCookingTime;
         burnTime = defaultBurnTime;
+
+        // Disable check and warning images at the start
+        checkImage.SetActive(false);
+        warningImage.SetActive(false);
     }
 
     private void Update()
@@ -49,10 +58,6 @@ public class Stove : MonoBehaviour
                 {
                     PlacePatty();
                 }
-            }
-            else if (hit.collider.CompareTag("Cooked Patty") || hit.collider.CompareTag("Burnt Patty"))
-            {
-                isOccupiedWithCookedOrBurntPatty = true;
             }
         }
 
@@ -95,10 +100,13 @@ public class Stove : MonoBehaviour
     private void CookPatty()
     {
         // Instantiate cooked patty
-        GameObject cookedPatty = Instantiate(cookedPattyPrefab, transform.position, Quaternion.identity);
+        cookedPattyInstance = Instantiate(cookedPattyPrefab, transform.position, Quaternion.identity);
 
         // Set cooked patty as child of the stove
-        cookedPatty.transform.SetParent(transform);
+        cookedPattyInstance.transform.SetParent(transform);
+
+        // Display check image
+        checkImage.SetActive(true);
 
         // Destroy uncooked patty
         Destroy(currentPattyInstance);
@@ -114,27 +122,55 @@ public class Stove : MonoBehaviour
         isOccupiedWithCookedOrBurntPatty = true;
 
         // Check if the cooked patty is successfully instantiated
-        if (cookedPatty != null)
+        if (cookedPattyInstance != null)
         {
-            StartBurnTimer(cookedPatty);
+            StartBurnTimer();
+            StartCoroutine(DisableCheckImageAfterDuration());
         }
     }
 
-
-    private void StartBurnTimer(GameObject cookedPatty)
+    private IEnumerator DisableCheckImageAfterDuration()
     {
-        burnCoroutine = StartCoroutine(BurnPatty(cookedPatty));
+        yield return new WaitForSeconds(checkImageDuration);
+        checkImage.SetActive(false);
     }
 
-    private IEnumerator BurnPatty(GameObject cookedPatty)
+    private void StartBurnTimer()
     {
-        yield return new WaitForSeconds(burnTime);
+        burnCoroutine = StartCoroutine(BurnPatty());
+    }
 
-        if (cookedPatty != null) // Check if the cooked patty is still in the scene before instantiating the burnt patty
+    private IEnumerator BurnPatty()
+    {
+        // Wait until there are 2 seconds left on the remaining burn time
+        yield return new WaitForSeconds(burnTime - 2f);
+
+        float remainingBurnTime = 2f; // Set remaining burn time to 2 seconds
+
+        // Flash warning image for 0.1 seconds interval
+        while (remainingBurnTime > 0 && isOccupiedWithCookedOrBurntPatty) // Check if still cooking
         {
-            GameObject burntPatty = Instantiate(burntPattyPrefab, transform.position, Quaternion.identity);
-            burntPatty.transform.SetParent(transform);
-            Destroy(cookedPatty);
+            warningImage.SetActive(!warningImage.activeSelf);
+            yield return new WaitForSeconds(0.1f);
+            remainingBurnTime -= 0.1f; // Decrement remaining time
+        }
+
+        // Disable warning image after the specified duration
+        yield return new WaitForSeconds(warningImageDuration);
+        warningImage.SetActive(false);
+
+        // Check if still cooking before proceeding
+        if (isOccupiedWithCookedOrBurntPatty)
+        {
+            // Instantiate burnt patty
+            burntPattyInstance = Instantiate(burntPattyPrefab, transform.position, Quaternion.identity);
+            burntPattyInstance.transform.SetParent(transform);
+
+            // Destroy cooked patty
+            Destroy(cookedPattyInstance);
+
+            // Disable warning image (just to ensure it's off)
+            warningImage.SetActive(false);
         }
     }
 
@@ -143,5 +179,18 @@ public class Stove : MonoBehaviour
         Debug.Log("Reset flags");
         isOccupiedWithUncookedPatty = false;
         isOccupiedWithCookedOrBurntPatty = false;
+
+        // Reset cooking timer
+        currentCookingTimer = 0f;
+        isCooking = false;
+
+        // Stop burn coroutine if it's running
+        if (burnCoroutine != null)
+        {
+            StopCoroutine(burnCoroutine);
+        }
     }
 }
+
+
+

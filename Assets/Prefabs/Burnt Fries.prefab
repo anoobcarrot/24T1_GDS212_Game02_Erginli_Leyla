@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8997714683010088661
+--- !u!1 &3397458146473889347
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,40 +8,40 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3265847743224846854}
-  - component: {fileID: 3446321457481928546}
-  - component: {fileID: 1591669412768168843}
-  - component: {fileID: 7700092132503983513}
-  - component: {fileID: 4930436774351126522}
+  - component: {fileID: 309782726325943550}
+  - component: {fileID: 1052808347269903195}
+  - component: {fileID: 4879403905623562555}
+  - component: {fileID: 1311741380882483360}
+  - component: {fileID: 9195760195781146788}
   m_Layer: 0
-  m_Name: Customer
-  m_TagString: Customer
+  m_Name: Burnt Fries
+  m_TagString: Burnt Fries
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3265847743224846854
+--- !u!4 &309782726325943550
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8997714683010088661}
+  m_GameObject: {fileID: 3397458146473889347}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.3393, y: 1.73, z: 0}
-  m_LocalScale: {x: 6.8168, y: 10.9356, z: 2}
+  m_LocalPosition: {x: 0.86, y: -4.4, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &3446321457481928546
+--- !u!212 &1052808347269903195
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8997714683010088661}
+  m_GameObject: {fileID: 3397458146473889347}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -75,9 +75,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 0.15178537, g: 1, b: 0, a: 1}
+  m_SortingOrder: 2
+  m_Sprite: {fileID: 21300000, guid: 8063ebfd33e48497f9d157e468ed7a9b, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -87,13 +87,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &1591669412768168843
+--- !u!114 &4879403905623562555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3397458146473889347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 258323adbcbb24d6284728109f55a19a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!61 &1311741380882483360
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8997714683010088661}
+  m_GameObject: {fileID: 3397458146473889347}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -119,27 +131,27 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0012364499, y: 0.0007707551}
+  m_Offset: {x: 0, y: -0.039642215}
   m_SpriteTilingProperty:
-    border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
+    border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.16}
+    oldSize: {x: 0.25, y: 0.25}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16839334, y: 0.14980112}
+  m_Size: {x: 0.25, y: 0.17071557}
   m_EdgeRadius: 0
---- !u!50 &7700092132503983513
+--- !u!50 &9195760195781146788
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8997714683010088661}
+  m_GameObject: {fileID: 3397458146473889347}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -159,21 +171,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!114 &4930436774351126522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8997714683010088661}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 196a47d1a14a4453cb03918148e72a82, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waitTime: 30
-  thinkBubblePrefab: {fileID: 2233693960922104313, guid: aef7860108cfc4bf1ad5d38c1c28a81d, type: 3}
-  foodItems:
-  - {fileID: 818688612964607309, guid: 6b2d93c130659401e8e9c55505c44946, type: 3}
-  - {fileID: 8732053926097768050, guid: 23cad6442832c407ea2b1abf8d47c9b4, type: 3}
-  - {fileID: 1646673756707860189, guid: 8c4ff239f86ff41d68359012c9348ec5, type: 3}

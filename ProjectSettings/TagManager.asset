@@ -11,10 +11,22 @@ TagManager:
   - Burger Bun
   - Burnt Patty
   - Stove Plate
-  - Cooked Burger
   - Customer
   - Food
   - Phone
+  - Uncooked Fries
+  - Cooked Fries
+  - Burnt Fries
+  - Fries Packet
+  - Uncooked Pork Belly
+  - Cooked Pork Belly
+  - Burnt Pork Belly
+  - Oven
+  - Soy Sauce
+  - Garlic
+  - Onion
+  - Bay Leaves
+  - Bowl
   layers:
   - Default
   - TransparentFX

@@ -4,33 +4,43 @@ public class Plate : MonoBehaviour
 {
     public GameObject burgerBunPrefab;
     public GameObject burgerPrefab;
+    public GameObject cookedPattyPrefab;
+    public GameObject friesPacketPrefab;
+    public GameObject cookedFriesPrefab;
+    public GameObject completedFriesPrefab;
 
-    private GameObject currentObjectOnPlate;
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.gameObject.CompareTag("Burger Bun") && currentObjectOnPlate == null)
+        if (other.CompareTag("Burger Bun") && transform.childCount == 0)
         {
-            currentObjectOnPlate = Instantiate(burgerBunPrefab, transform.position, Quaternion.identity);
+            InstantiateAndCenter(burgerBunPrefab);
+            
+        }
+        else if (other.CompareTag("Cooked Patty") && transform.childCount == 1 && transform.GetChild(0).CompareTag("Burger Bun"))
+        {
+            InstantiateAndCenter(burgerPrefab);
+            Destroy(other.gameObject);
+            Destroy(transform.GetChild(0).gameObject);
+        }
+        else if (other.CompareTag("Fries Packet") && transform.childCount == 0)
+        {
+            InstantiateAndCenter(friesPacketPrefab);
+            
+        }
+        else if (other.CompareTag("Cooked Fries") && transform.childCount == 1 && transform.GetChild(0).CompareTag("Fries Packet"))
+        {
+            InstantiateAndCenter(completedFriesPrefab);
+            Destroy(other.gameObject);
+            Destroy(transform.GetChild(0).gameObject);
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void InstantiateAndCenter(GameObject prefab)
     {
-        if (collision.gameObject == currentObjectOnPlate)
-        {
-            currentObjectOnPlate = null;
-        }
-    }
+        // Get the center position of the collider
+        Vector2 center = GetComponent<Collider2D>().bounds.center;
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Cooked Patty") && currentObjectOnPlate != null)
-        {
-            Destroy(collision.gameObject);
-            Destroy(currentObjectOnPlate);
-            currentObjectOnPlate = Instantiate(burgerPrefab, transform.position, Quaternion.identity);
-        }
+        // Instantiate the prefab at the center position
+        Instantiate(prefab, center, Quaternion.identity, transform);
     }
 }
-
