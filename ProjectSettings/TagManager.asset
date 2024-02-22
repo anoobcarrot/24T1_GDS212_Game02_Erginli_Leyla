@@ -27,14 +27,26 @@ TagManager:
   - Onion
   - Bay Leaves
   - Bowl
+  - Drink
+  - Deep Fryer
+  - Pork Adobo
+  - Completed Fries
+  - Completed Burger
+  - Drink - Bubblegum
+  - Drink - Red Velvet
+  - Drink - Chocolate
+  - Drink - Taro
+  - Drink - Strawberry
+  - Drink - Lime
+  - Bin
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Dragging
   - Water
   - UI
-  - 
+  - Food Ingredients
   - 
   - 
   - 

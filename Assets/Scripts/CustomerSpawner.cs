@@ -3,15 +3,8 @@ using UnityEngine;
 public class CustomerSpawner : MonoBehaviour
 {
     public GameObject customerPrefab;
-    public float initialSpawnIntervalMin = 10f;
-    public float initialSpawnIntervalMax = 20f;
-    public float firstIntervalStart = 120f;
-    public float firstIntervalMin = 240f;
-    public float firstIntervalMax = 300f;
-    public float secondIntervalStart = 420f;
-    public float secondIntervalMin = 600f;
-    public float secondIntervalMax = 660f;
-    public float thirdIntervalStart = 780f;
+    public float initialSpawnIntervalMin = 20f;
+    public float initialSpawnIntervalMax = 30f;
     public float minDistanceBetweenCustomers = 0.5f;
 
     private float nextSpawnTime;
@@ -70,34 +63,31 @@ public class CustomerSpawner : MonoBehaviour
         float spawnInterval;
         float currentTime = Time.time;
 
-        if (currentTime < firstIntervalStart)
+        if (currentTime < 120f) // First 2 minutes (0-120 seconds)
         {
-            spawnInterval = Random.Range(initialSpawnIntervalMin, initialSpawnIntervalMax);
+            Debug.Log("first interval");
+            // Customers spawn between 20-30 seconds
+            spawnInterval = Random.Range(20f, 30f);
         }
-        else if (currentTime < firstIntervalMin)
+        else if (currentTime < 360f) // 6 minutes (121-360 seconds)
         {
-            spawnInterval = Random.Range(firstIntervalMin, firstIntervalMax);
+            Debug.Log("second interval");
+            // Customers spawn between 15-20 seconds
+            spawnInterval = Random.Range(15f, 20f);
         }
-        else if (currentTime < secondIntervalStart)
+        else // Rest of the scene
         {
-            spawnInterval = Random.Range(firstIntervalMin, firstIntervalMax);
-        }
-        else if (currentTime < secondIntervalMin)
-        {
-            spawnInterval = Random.Range(secondIntervalMin, secondIntervalMax);
-        }
-        else if (currentTime < thirdIntervalStart)
-        {
-            spawnInterval = Random.Range(secondIntervalMin, secondIntervalMax);
-        }
-        else
-        {
-            spawnInterval = Random.Range(180f, 600f); // Between 3 to 10 seconds
+            Debug.Log("final interval");
+            // Customers spawn between 10-15 seconds
+            spawnInterval = Random.Range(10f, 15f);
         }
 
+        // Update next spawn time based on current time and calculated spawn interval
         nextSpawnTime = currentTime + spawnInterval;
     }
 }
+
+
 
 
 

@@ -6,6 +6,7 @@ public class PhoneController : MonoBehaviour
     public GameObject phonePopup;
     public GameObject recipeBookUI;
     public GameObject newsUI;
+    public GameObject drinksUI;
 
     private bool phonePopupActive = false;
 
@@ -15,6 +16,7 @@ public class PhoneController : MonoBehaviour
         phonePopup.SetActive(false);
         recipeBookUI.SetActive(false);
         newsUI.SetActive(false);
+        drinksUI.SetActive(false);
     }
 
     private void Update()
@@ -39,6 +41,15 @@ public class PhoneController : MonoBehaviour
         // Disable phone popup and enable recipe book UI
         recipeBookUI.SetActive(true);
         newsUI.SetActive(false);
+        drinksUI.SetActive(false);
+    }
+
+    public void OpenDrinks()
+    {
+        // Disable phone popup and enable drinks UI
+        drinksUI.SetActive(true);
+        recipeBookUI.SetActive(false);
+        newsUI.SetActive(false);
     }
 
     public void OpenNews()
@@ -46,18 +57,21 @@ public class PhoneController : MonoBehaviour
         // Disable phone popup and enable news UI
         recipeBookUI.SetActive(false);
         newsUI.SetActive(true);
+        drinksUI.SetActive(false);
     }
     public void Home()
     {
         // Return to the home menu on phone
         recipeBookUI.SetActive(false);
         newsUI.SetActive(false);
+        drinksUI.SetActive(false);
     }
 
     public void Close()
     {
         // Return to the home menu on phone
         recipeBookUI.SetActive(false);
+        drinksUI.SetActive(false);
         newsUI.SetActive(false);
         phonePopup.SetActive(false);
     }

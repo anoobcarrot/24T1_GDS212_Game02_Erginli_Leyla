@@ -12,47 +12,61 @@ public class Bowl : MonoBehaviour
     private int ingredientCount = 0;
     private GameObject adoboInstance; // Reference to the instantiated adobo prefab
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void Update()
     {
-        switch (other.tag)
+        if (Input.GetMouseButtonUp(0))
         {
-            case "Soy Sauce":
-                if (ingredientCount == 0)
-                    InstantiateAndPosition(soySaucePrefab);
-                break;
-            case "Garlic":
-                if (ingredientCount == 1)
-                    InstantiateAndPosition(garlicPrefab);
-                break;
-            case "Cooked Pork Belly":
-                GameObject ovenObject = GameObject.FindGameObjectWithTag("Oven");
-                if (ovenObject != null)
-                {
-                    Transform[] children = ovenObject.GetComponentsInChildren<Transform>();
-                    foreach (Transform child in children)
+            // Cast a ray from the mouse position
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+
+            // Check if the ray hits an object
+            if (hit.collider != null)
+            {
+
+                if (GetComponent<Collider2D>().bounds.Contains(hit.collider.bounds.center))
+                    switch (hit.collider.tag)
                     {
-                        if (child.CompareTag("Cooked Pork Belly"))
-                        {
-                            GameObject cookedPorkBelly = child.gameObject;
-                            Destroy(cookedPorkBelly);
-                            InstantiateAndPosition(cookedPorkBellyPrefab);
+                        case "Soy Sauce":
+                            if (ingredientCount == 0)
+                                InstantiateAndPosition(soySaucePrefab);
                             break;
-                        }
+                        case "Garlic":
+                            if (ingredientCount == 1)
+                                InstantiateAndPosition(garlicPrefab);
+                            break;
+                        case "Cooked Pork Belly":
+                            GameObject ovenObject = GameObject.FindGameObjectWithTag("Oven");
+                            if (ingredientCount ==2)
+                          
+                            if (ovenObject != null)
+                            {
+                                Transform[] children = ovenObject.GetComponentsInChildren<Transform>();
+                                foreach (Transform child in children)
+                                {
+                                    if (child.CompareTag("Cooked Pork Belly"))
+                                    {
+                                        GameObject cookedPorkBelly = child.gameObject;
+                                        Destroy(cookedPorkBelly);
+                                        InstantiateAndPosition(cookedPorkBellyPrefab);
+                                        break;
+                                    }
+                                }
+                            }
+                            break;
+                        case "Onion":
+                            if (ingredientCount == 3)
+                                InstantiateAndPosition(onionPrefab);
+                            break;
+                        case "Bay Leaves":
+                            if (ingredientCount == 4)
+                            {
+                                InstantiateAndPosition(bayLeavesPrefab);
+                                CreatePorkAdobo();
+                                DestroyIngredients();
+                            }
+                            break;
                     }
-                }
-                break;
-            case "Onion":
-                if (ingredientCount == 3)
-                    InstantiateAndPosition(onionPrefab);
-                break;
-            case "Bay Leaves":
-                if (ingredientCount == 4)
-                {
-                    InstantiateAndPosition(bayLeavesPrefab);
-                    CreatePorkAdobo();
-                    DestroyIngredients();
-                }
-                break;
+            }
         }
     }
 
@@ -68,6 +82,9 @@ public class Bowl : MonoBehaviour
         // Instantiate the Pork Adobo prefab at the center of the bowl collider
         Vector3 center = transform.GetComponent<Collider2D>().bounds.center;
         adoboInstance = Instantiate(porkAdoboPrefab, center, Quaternion.identity, transform);
+
+        // Reset ingredient count
+        ingredientCount = 0;
     }
 
     private void DestroyIngredients()

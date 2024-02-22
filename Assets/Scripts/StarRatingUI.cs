@@ -5,30 +5,40 @@ public class StarRatingUI : MonoBehaviour
 {
     public Image[] starImages;
 
+    private int starRating;
+
     void Start()
     {
-        // Ensure that only the first star is initially visible
-        for (int i = 1; i < starImages.Length; i++)
-        {
-            starImages[i].enabled = false;
-        }
+        // Set the initial star rating to 3
+        starRating = 3;
+        UpdateStarRatingUI(starRating);
     }
 
-    public void UpdateStarRating(int starRating)
+    public void UpdateStarRating(int newStarRating)
     {
-        // Ensure that starRating is within the valid range
-        starRating = Mathf.Clamp(starRating, 1, starImages.Length);
+        // Ensure that newStarRating is within the valid range
+        newStarRating = Mathf.Clamp(newStarRating, 0, starImages.Length);
 
-        // Enable the first star and disable the rest based on the star rating
+        starRating = newStarRating;
+        UpdateStarRatingUI(starRating);
+    }
+
+    private void UpdateStarRatingUI(int rating)
+    {
+        // Enable the stars based on the star rating
         for (int i = 0; i < starImages.Length; i++)
         {
-            if (i < starRating)
-                starImages[i].enabled = true;
-            else
-                starImages[i].enabled = false;
+            starImages[i].enabled = i < rating;
         }
     }
+
+    public int GetStarRating()
+    {
+        return starRating;
+    }
 }
+
+
 
 
 

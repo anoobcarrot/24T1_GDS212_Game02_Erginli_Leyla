@@ -38,6 +38,31 @@ public class DeepFryer : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetMouseButtonUp(0))
+        {
+            // Cast a ray from the mouse position
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+
+            // Check if the ray hits a collider with the tag "Uncooked Pork Belly"
+            if (hit.collider != null && hit.collider.CompareTag("Uncooked Fries"))
+            {
+                // Check if the oven collider contains the uncooked pork belly collider
+                if (GetComponent<Collider2D>().bounds.Intersects(hit.collider.bounds))
+                {
+                    // Check if the oven is not occupied with an uncooked pork belly and not cooking
+                    if (!isOccupiedWithUncookedFries && !isOccupiedWithCookedOrBurntFries && !isCooking)
+                    {
+                        Debug.Log("Placing fries");
+                        PlaceFries();
+                    }
+                }
+                else if (hit.collider.CompareTag("Cooked Fries") || hit.collider.CompareTag("Burnt Fries"))
+                {
+                    isOccupiedWithCookedOrBurntFries = true;
+                }
+            }
+        }
+
         if (isCooking)
         {
             currentCookingTimer += Time.deltaTime;
@@ -45,23 +70,6 @@ public class DeepFryer : MonoBehaviour
             if (currentCookingTimer >= cookingTime)
             {
                 CookFries();
-            }
-        }
-
-        // Check for nearby uncooked fries
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.zero);
-        if (hit.collider != null)
-        {
-            if (hit.collider.CompareTag("Uncooked Fries"))
-            {
-                if (!isOccupiedWithUncookedFries && !isOccupiedWithCookedOrBurntFries)
-                {
-                    PlaceFries();
-                }
-            }
-            else if (hit.collider.CompareTag("Cooked Fries") || hit.collider.CompareTag("Burnt Fries"))
-            {
-                isOccupiedWithCookedOrBurntFries = true;
             }
         }
 

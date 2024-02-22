@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 8997714683010088661}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.3393, y: 1.73, z: 0}
+  m_LocalPosition: {x: -6.7245746, y: -4.5868864, z: 0}
   m_LocalScale: {x: 6.8168, y: 10.9356, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 0.15178537, g: 1, b: 0, a: 1}
   m_FlipX: 0
@@ -174,6 +174,15 @@ MonoBehaviour:
   waitTime: 30
   thinkBubblePrefab: {fileID: 2233693960922104313, guid: aef7860108cfc4bf1ad5d38c1c28a81d, type: 3}
   foodItems:
-  - {fileID: 818688612964607309, guid: 6b2d93c130659401e8e9c55505c44946, type: 3}
-  - {fileID: 8732053926097768050, guid: 23cad6442832c407ea2b1abf8d47c9b4, type: 3}
-  - {fileID: 1646673756707860189, guid: 8c4ff239f86ff41d68359012c9348ec5, type: 3}
+  - {fileID: 7223501476123035329, guid: b34b9e9de7c02440a97f6c40faadb75d, type: 3}
+  - {fileID: 2807965531201412311, guid: 84c11bda1fe2f4db3bdbff91d6c381fa, type: 3}
+  - {fileID: 4607730673735944093, guid: e887d26e4b141431cabd23fd77725d1b, type: 3}
+  drinks:
+  - {fileID: 4546776770204547241, guid: 2e968f5efaeb54b5889432463f0a4d23, type: 3}
+  - {fileID: 432228905029924936, guid: 4eff81d5e01c6469390e064bb35ec834, type: 3}
+  - {fileID: 573100747453921893, guid: 424fd2223d685471ea03e3aa7072be30, type: 3}
+  - {fileID: 5200537010848825644, guid: 8b86873e0ff03481482cdc4da9ea1c65, type: 3}
+  - {fileID: 5699074413872765655, guid: f69508d5fe9e742399a0bc87a8d80931, type: 3}
+  - {fileID: 3978653924497475116, guid: f4522676d83b040ac8d2813aa4b35fb5, type: 3}
+  gameOverUI: {fileID: 829033528296210741, guid: 1d535e0f882c7411abd7f8e4c560258e, type: 3}
+  thinkBubbleItems: []

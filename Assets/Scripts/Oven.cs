@@ -38,6 +38,27 @@ public class Oven : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetMouseButtonUp(0))
+        {
+            // Cast a ray from the mouse position
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+
+            // Check if the ray hits a collider with the tag "Uncooked Pork Belly"
+            if (hit.collider != null && hit.collider.CompareTag("Uncooked Pork Belly"))
+            {
+                // Check if the oven collider contains the uncooked pork belly collider
+                if (GetComponent<Collider2D>().bounds.Intersects(hit.collider.bounds))
+                {
+                    // Check if the oven is not occupied with an uncooked pork belly and not cooking
+                    if (!isOccupiedWithUncookedPorkBelly && !isOccupiedWithCookedOrBurntPorkBelly && !isCooking)
+                    {
+                        Debug.Log("Placing uncooked pork belly in the oven");
+                        PlacePorkBelly();
+                    }
+                }
+            }
+        }
+
         if (isCooking)
         {
             currentCookingTimer += Time.deltaTime;
@@ -45,19 +66,6 @@ public class Oven : MonoBehaviour
             if (currentCookingTimer >= cookingTime)
             {
                 CookPorkBelly();
-            }
-        }
-
-        // Check for nearby uncooked pork belly
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.zero);
-        if (hit.collider != null)
-        {
-            if (hit.collider.CompareTag("Uncooked Pork Belly"))
-            {
-                if (!isOccupiedWithUncookedPorkBelly && !isOccupiedWithCookedOrBurntPorkBelly)
-                {
-                    PlacePorkBelly();
-                }
             }
         }
 
@@ -77,24 +85,11 @@ public class Oven : MonoBehaviour
 
     private void PlacePorkBelly()
     {
-        // Check if the oven is not occupied with an uncooked pork belly
-        if (!isOccupiedWithUncookedPorkBelly)
-        {
-            // Check if the oven is not occupied with a cooked or burnt pork belly
-            if (!isOccupiedWithCookedOrBurntPorkBelly)
-            {
-                // Start cooking the pork belly when an uncooked pork belly is placed in the oven
-                currentPorkBellyInstance = Instantiate(uncookedPorkBellyPrefab, transform.position, Quaternion.identity);
-                currentPorkBellyInstance.transform.SetParent(transform);
-                isOccupiedWithUncookedPorkBelly = true;
-                isCooking = true;
-            }
-            else
-            {
-                // If there's a cooked or burnt pork belly but no uncooked pork belly, reset flags
-                ResetPorkBellyFlags();
-            }
-        }
+        // Start cooking the pork belly when an uncooked pork belly is placed in the oven
+        currentPorkBellyInstance = Instantiate(uncookedPorkBellyPrefab, transform.position, Quaternion.identity);
+        currentPorkBellyInstance.transform.SetParent(transform);
+        isOccupiedWithUncookedPorkBelly = true;
+        isCooking = true;
     }
 
     private void CookPorkBelly()
@@ -191,4 +186,5 @@ public class Oven : MonoBehaviour
         }
     }
 }
+
 

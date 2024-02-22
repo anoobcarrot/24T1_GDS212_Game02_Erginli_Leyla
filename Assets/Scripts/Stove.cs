@@ -38,6 +38,27 @@ public class Stove : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetMouseButtonUp(0))
+        {
+            // Cast a ray from the mouse position
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+
+            // Check if the ray hits a collider with the tag "Uncooked Pork Belly"
+            if (hit.collider != null && hit.collider.CompareTag("Uncooked Patty"))
+            {
+                // Check if the oven collider contains the uncooked pork belly collider
+                if (GetComponent<Collider2D>().bounds.Intersects(hit.collider.bounds))
+                {
+                    // Check if the oven is not occupied with an uncooked pork belly and not cooking
+                    if (!isOccupiedWithUncookedPatty && !isOccupiedWithCookedOrBurntPatty && !isCooking)
+                    {
+                        Debug.Log("Placing uncooked patty");
+                        PlacePatty();
+                    }
+                }
+            }
+        }
+
         if (isCooking)
         {
             currentCookingTimer += Time.deltaTime;
@@ -45,19 +66,6 @@ public class Stove : MonoBehaviour
             if (currentCookingTimer >= cookingTime)
             {
                 CookPatty();
-            }
-        }
-
-        // Check for nearby uncooked patty
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.zero);
-        if (hit.collider != null)
-        {
-            if (hit.collider.CompareTag("Uncooked Patty"))
-            {
-                if (!isOccupiedWithUncookedPatty && !isOccupiedWithCookedOrBurntPatty)
-                {
-                    PlacePatty();
-                }
             }
         }
 
@@ -77,24 +85,11 @@ public class Stove : MonoBehaviour
 
     private void PlacePatty()
     {
-        // Check if the stove is not occupied with an uncooked patty
-        if (!isOccupiedWithUncookedPatty)
-        {
-            // Check if the stove is not occupied with a cooked or burnt patty
-            if (!isOccupiedWithCookedOrBurntPatty)
-            {
-                // Start cooking the patty when an uncooked patty is placed on the stove
-                currentPattyInstance = Instantiate(uncookedPattyPrefab, transform.position, Quaternion.identity);
-                currentPattyInstance.transform.SetParent(transform);
-                isOccupiedWithUncookedPatty = true;
-                isCooking = true;
-            }
-            else
-            {
-                // If there's a cooked or burnt patty but no uncooked patty, reset flags
-                ResetPattyFlags();
-            }
-        }
+        // Start cooking the patty when an uncooked patty is placed on the stove
+        currentPattyInstance = Instantiate(uncookedPattyPrefab, transform.position, Quaternion.identity);
+        currentPattyInstance.transform.SetParent(transform);
+        isOccupiedWithUncookedPatty = true;
+        isCooking = true;
     }
 
     private void CookPatty()
@@ -191,6 +186,3 @@ public class Stove : MonoBehaviour
         }
     }
 }
-
-
-
